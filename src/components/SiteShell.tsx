@@ -1,0 +1,22 @@
+import { useState } from 'react';
+import { Link } from '@tanstack/react-router';
+import { ArrowUpRight, Menu, X, MessageCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { whatsapp, phone } from '@/lib/catalog';
+import logo from '@/assets/jainsaiyam-logo.png.asset.json';
+const nav = [{ to: '/', label: 'Services' }, { to: '/about', label: 'About' }, { to: '/contact', label: 'Contact' }] as const;
+export function SiteShell({ children }: { children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  return <div className="min-h-screen bg-background text-foreground">
+    <header className="relative z-40 border-b border-light-border bg-ink text-light-foreground"><div className="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-4 px-5 md:px-10">
+      <Link to="/" onClick={() => setOpen(false)} className="flex min-w-0 items-center gap-3"><img src={logo.url} alt="JAINSAIYAM logo" width={38} height={38} className="size-10 shrink-0 rounded-md bg-background object-contain p-1"/><span className="truncate font-display text-[17px] font-extrabold tracking-normal sm:text-xl">JAIN<span className="text-primary">SAIYAM</span></span></Link>
+      <nav aria-label="Main navigation" className="hidden items-center gap-9 md:flex">{nav.map(({to,label}) => <Link key={to} to={to} activeOptions={{exact:true}} className="text-sm font-medium text-light-muted transition-colors hover:text-primary" activeProps={{className:'text-primary'}}>{label}</Link>)}</nav>
+      <div className="hidden md:block"><Button variant="brand" asChild><Link to="/contact">Get Started <ArrowUpRight /></Link></Button></div>
+      <Button variant="navIcon" size="icon" aria-label={open ? 'Close menu' : 'Open menu'} onClick={() => setOpen(!open)} className="md:hidden">{open ? <X /> : <Menu />}</Button>
+    </div>{open && <nav aria-label="Mobile navigation" className="absolute inset-x-0 top-full border-t border-light-border bg-ink px-5 pb-6 shadow-2xl md:hidden">{nav.map(({to,label}) => <Link key={to} to={to} onClick={() => setOpen(false)} className="block border-b border-light-border py-4 text-lg">{label}</Link>)}<Button variant="brand" asChild className="mt-5 w-full"><Link to="/contact" onClick={() => setOpen(false)}>Get Started <ArrowUpRight /></Link></Button></nav>}</header>
+    <main>{children}</main>
+    <footer className="bg-ink px-5 pb-28 pt-16 text-light-foreground md:px-10 md:pb-10"><div className="mx-auto max-w-7xl"><div className="grid gap-12 border-b border-light-border pb-14 md:grid-cols-[1.5fr_1fr_1fr]"><div><Link to="/" className="font-display text-2xl font-extrabold">JAIN<span className="text-primary">SAIYAM</span></Link><p className="mt-4 max-w-xs text-sm leading-7 text-light-muted">Digital solutions for businesses ready to grow.</p></div><div><p className="mb-5 text-xs font-bold uppercase text-primary">Explore</p><div className="flex flex-col gap-3 text-sm text-light-muted">{nav.map(({to,label}) => <Link key={to} to={to} className="hover:text-primary">{label}</Link>)}<a href={whatsapp()} target="_blank" rel="noreferrer">WhatsApp</a></div></div><div><p className="mb-5 text-xs font-bold uppercase text-primary">Connect</p><div className="flex flex-col gap-3 text-sm text-light-muted"><a href={`tel:${phone}`}>+91 8388810468</a><a href="mailto:hello@jainsaiyam.in">hello@jainsaiyam.in</a><a href="https://www.instagram.com/saiyam.io" target="_blank" rel="noreferrer">@saiyam.io</a></div></div></div><div className="flex flex-col gap-2 pt-7 text-xs text-light-muted sm:flex-row sm:justify-between"><span>© 2026 JAINSAIYAM. All rights reserved.</span><span>Built for what’s next.</span></div></div></footer>
+    <a href={whatsapp()} target="_blank" rel="noreferrer" aria-label="Chat on WhatsApp" title="Chat on WhatsApp" className="fixed bottom-24 right-5 z-30 hidden size-12 items-center justify-center rounded-full bg-whatsapp text-primary-foreground shadow-xl transition-transform hover:scale-105 md:flex"><MessageCircle className="size-6" /></a>
+    <div className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-2 border-t border-light-border bg-ink p-3 text-light-foreground md:hidden"><a href={whatsapp()} target="_blank" rel="noreferrer" className="flex h-12 items-center justify-center gap-2 text-sm font-semibold"><MessageCircle className="size-4" /> WhatsApp</a><Button variant="brand" asChild><Link to="/contact">Get Started <ArrowUpRight /></Link></Button></div>
+  </div>;
+}
