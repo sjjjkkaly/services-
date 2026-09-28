@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep public service/package definitions in `src/lib/catalog.ts` and share them across pages and enquiry forms, so prices and labels stay aligned.
+- Store public visitor enquiries through validated server functions into RLS-locked `service_enquiries`; public clients must never access this private contact data directly.
+- Keep the three requested content pages at `/`, `/about`, and `/contact`, with shared navigation in the root shell for consistent links and metadata.

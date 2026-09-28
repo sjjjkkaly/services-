@@ -1,0 +1,3 @@
+- [x] Build the Services, About, and Contact pages using supplied brand assets.
+- [x] Add package selection, order summary, and persistent enquiry forms.
+- [ ] Integrate and verify PayU checkout and payment confirmation (blocked: private merchant salt not provided).
